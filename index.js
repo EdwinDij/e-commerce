@@ -1,10 +1,11 @@
 const express = require('express');
+require('dotenv').config();
 const app = express();
 const cors = require('cors');
 const helmet = require('helmet');
 const port = process.env.PORT || 8000;
-
-const {sequelize} = require('./config/db');
+const sequelize  = require('./config/db');
+const userRoutes = require('./Routes/user');
 
 app.use(cors());
 app.use(helmet());
@@ -17,21 +18,17 @@ app.use((req, res, next) => {
     next();
 });
 
-async function connectDb () {
-    try  {
-        await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
-    } catch (error) {
-        console.error('Unable to connect to the database:', error);
-    }
+try {
+    sequelize.authenticate();
+    console.log('Connection has been established successfully.');
+} catch (error) {
+    console.error('Unable to connect to the database:', error);
 }
 
-connectDb();
 
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-
+app.listen(port, () => console.log(`listening on port ${port}!`));
 app.get('/', (req, res) => {
     res.send('Hello World!');
-    }
-);
+});
+
+app.use('/api/auth', userRoutes);
