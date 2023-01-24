@@ -4,8 +4,9 @@ const app = express();
 const cors = require('cors');
 const helmet = require('helmet');
 const port = process.env.PORT || 8000;
-const sequelize  = require('./config/db');
+const sequelize  = require('./Config/db');
 const userRoutes = require('./Routes/user');
+const productRoutes = require('./Routes/product');
 
 app.use(cors());
 app.use(helmet());
@@ -32,3 +33,4 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', userRoutes);
+app.use('/api/products', productRoutes);

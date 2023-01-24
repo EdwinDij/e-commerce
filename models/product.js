@@ -1,37 +1,34 @@
-const {Sequelize, DataTypes} = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 const db = require('../Config/db')
 
-const User = db.define('User', {
+const Product = db.define('Product', {
     id: {
         type: DataTypes.INTEGER.UNSIGNED,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false
     },
-    firstname: {
+    name: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    lastname: {
+    price: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    description: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
+    imageUrl: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    password: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    isAdmin: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false
-    }
 })
 
-module.exports = User
-
-User.sync().then(() => {
+Product.sync().then(() => {
     console.log('tables user avec succès ! ')
 })
+
+
+module.exports = Product
